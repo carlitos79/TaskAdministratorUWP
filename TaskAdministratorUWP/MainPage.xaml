@@ -1,0 +1,69 @@
+﻿<Page
+    x:Class="TaskAdministratorUWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TaskAdministratorUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local1="using:TaskAdministratorUWP.Models"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Margin="30" Background="PowderBlue">
+            <TextBlock Text="Tasks" 
+                       FontSize="40"/>
+            <ListView x:Name="TaskList" IsItemClickEnabled="True" ItemClick="SetTaskDetails">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local1:TasksClient">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="47"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="Assets/Tool.png" Width="32" Height="32" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{x:Bind Title}" Foreground="Teal" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <StackPanel Orientation="Horizontal">
+                <Image Source="Assets/YourTasks.png" Width="43" Height="43" HorizontalAlignment="Left" Margin="10,10,15,10"/>
+                <Button Content="User Tasks" Click="OpenUsersPopup" Margin="-10,10,15,10"/>
+            </StackPanel>
+            
+        </StackPanel>
+        <Popup VerticalOffset="-100" HorizontalOffset="280" x:Name="PopupUsers" VerticalAlignment="Center">
+            <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" 
+                Background="LightGray"
+                BorderThickness="2" Width="200" Height="200">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Search Name" FontSize="25" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="AssingmentsBox" HorizontalAlignment="Left" Margin="0,5,5,5" VerticalAlignment="Center" Width="100">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FirstName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Regret" Click="ClosePopupWindow" HorizontalAlignment="Left" Margin="0,5,5,5"/>
+                        <Button Content="Confirm" Click="OpenPopupTaskList" HorizontalAlignment="Right" Margin="5,5,5,5"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Popup>
+
+        <Popup VerticalOffset="-100" HorizontalOffset="280" x:Name="PopupListOfTasks" VerticalAlignment="Center">
+            <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" 
+                Background="LightGray"
+                BorderThickness="2" Width="200" Height="150">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock x:Name="UserNameTextBlock" HorizontalAlignment="Center" FontSize="20" Foreground="DeepSkyBlue"/>
+                    <TextBlock x:Name="ListOfTasksTextBlock" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                    <Button Content="Ok" Click="ClosePopupTaskList" HorizontalAlignment="Center" Margin="5,10,5,5"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</Page>
